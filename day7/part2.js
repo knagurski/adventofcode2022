@@ -38,8 +38,11 @@ const dirSizes = Object.entries(structure).reduce((dirs, [path, fileSize]) => {
   return dirs
 }, {})
 
+const available = 70000000 - dirSizes['/']
+const required = 30000000 - available
+
 console.log(
   Object.values(dirSizes)
-    .filter(size => size <= 100000)
-    .reduce((total, size) => total + size, 0)
+    .sort((a, b) => (a < b ? -1 : 1))
+    .find(size => size >= required)
 )
